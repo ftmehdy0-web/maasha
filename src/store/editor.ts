@@ -31,6 +31,9 @@ interface EditorState {
   future: Project[];
   notices: Notice[];
   importing: number;
+  snapping: boolean;
+  /** Time of the active snap guide while dragging, for display only. */
+  snapLine: number | null;
 
   // history
   commit: (fn: (p: Project) => Project, coalesceKey?: string) => void;
@@ -47,6 +50,8 @@ interface EditorState {
   togglePlay: () => void;
   stepFrames: (n: number) => void;
   setZoom: (z: number) => void;
+  toggleSnapping: () => void;
+  setSnapLine: (t: number | null) => void;
 
   // editing
   select: (id: string | null) => void;
@@ -90,6 +95,8 @@ export const useEditor = create<EditorState>()((set, get) => ({
   future: [],
   notices: [],
   importing: 0,
+  snapping: true,
+  snapLine: null,
 
   commit: (fn, coalesceKey) => {
     const prev = get().project;
@@ -173,6 +180,8 @@ export const useEditor = create<EditorState>()((set, get) => ({
     s.setPlayhead(frame / s.project.fps);
   },
   setZoom: (z) => set({ zoom: clamp(z, ZOOM_MIN, ZOOM_MAX) }),
+  toggleSnapping: () => set((s) => ({ snapping: !s.snapping })),
+  setSnapLine: (t) => set({ snapLine: t }),
 
   select: (id) => set({ selectedId: id }),
 
