@@ -183,6 +183,16 @@ export class MediaPool {
     return false;
   }
 
+  /** Snapshot of element state, used by browser tests in development. */
+  debugState() {
+    return [...this.slots.entries()].map(([clipId, s]) => ({
+      clipId,
+      paused: s.el.paused,
+      time: s.el.currentTime,
+      gain: s.gain ? s.gain.gain.value : s.el.volume,
+    }));
+  }
+
   dispose() {
     for (const id of [...this.slots.keys()]) this.release(id);
     for (const img of this.images.values()) if (typeof img !== "string") img.close();

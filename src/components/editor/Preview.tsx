@@ -43,6 +43,7 @@ export function Preview() {
     };
     const pool = new MediaPool(hostRef.current!, requestDraw);
     poolRef.current = pool;
+    if (process.env.NODE_ENV === "development") (window as unknown as { __maashaPool: MediaPool }).__maashaPool = pool;
 
     const tick = () => {
       const s = useEditor.getState();
