@@ -100,7 +100,7 @@ export const Clip = memo(function Clip({ clip, media, zoom, height, selected }: 
   const width = Math.max(2, clip.duration * zoom);
   const kind = clip.type === "text" ? "text" : media?.kind ?? "video";
   const color =
-    kind === "text" ? "bg-clip-text" : kind === "audio" ? "bg-clip-audio" : "bg-clip-video";
+    kind === "text" ? "bg-tl-text" : kind === "audio" ? "bg-tl-audio" : "bg-tl-video";
   const label = clip.type === "text" ? clip.text.split("\n")[0] || "Text" : media?.name ?? "Missing media";
   const showThumb = clip.type === "media" && media?.thumbnail && kind !== "audio";
   const muted = clip.type === "media" && (clip.muted || clip.volume === 0);

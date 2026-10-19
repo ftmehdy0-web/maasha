@@ -2,7 +2,7 @@
 // these with history; tests exercise them directly.
 
 import type { Clip, MediaAsset, MediaClip, Project, TextClip, Track, TrackKind } from "../types";
-import { IMAGE_DEFAULT_DURATION, MIN_CLIP_DURATION, TEXT_DEFAULT_DURATION, clipEnd } from "../types";
+import { FONTS, IMAGE_DEFAULT_DURATION, MIN_CLIP_DURATION, TEXT_DEFAULT_DURATION, clipEnd } from "../types";
 import { uid } from "../id";
 
 const EPS = 1e-6;
@@ -157,7 +157,7 @@ export function addTextClip(p: Project, at: number, trackId?: string): { project
     start,
     duration: TEXT_DEFAULT_DURATION,
     text: "Your text",
-    font: "Inter, Arial, sans-serif",
+    font: FONTS[0].value,
     size: 96,
     color: "#ffffff",
     x: 0.5,

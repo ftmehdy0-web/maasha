@@ -79,13 +79,16 @@ export const IMAGE_DEFAULT_DURATION = 5;
 export const TEXT_DEFAULT_DURATION = 3;
 export const MIN_CLIP_DURATION = 0.1;
 
+/**
+ * Font stacks limited to widely installed system fonts so the preview (main
+ * thread) and export (worker OffscreenCanvas) resolve the same typeface.
+ */
 export const FONTS = [
-  "Inter, Arial, sans-serif",
-  "Georgia, serif",
-  "'Courier New', monospace",
-  "Impact, 'Arial Black', sans-serif",
-  "'Trebuchet MS', sans-serif",
-  "'Times New Roman', serif",
+  { label: "Sans", value: "Arial, Helvetica, sans-serif" },
+  { label: "Serif", value: "Georgia, 'Times New Roman', serif" },
+  { label: "Mono", value: "'Courier New', Courier, monospace" },
+  { label: "Impact", value: "Impact, 'Arial Black', sans-serif" },
+  { label: "Trebuchet", value: "'Trebuchet MS', Verdana, sans-serif" },
 ] as const;
 
 export function clipEnd(c: { start: number; duration: number }): number {

@@ -21,8 +21,8 @@ export function Inspector() {
       </header>
       <div className="p-3">
         {!clip && <ProjectInfo />}
-        {clip?.type === "media" && <MediaClipPanel clip={clip} />}
-        {clip?.type === "text" && <TextEditor clip={clip} />}
+        {clip?.type === "media" && <MediaClipPanel key={clip.id} clip={clip} />}
+        {clip?.type === "text" && <TextEditor key={clip.id} clip={clip} />}
       </div>
     </aside>
   );

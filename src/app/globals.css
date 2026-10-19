@@ -12,9 +12,9 @@
   --color-accent-strong: #9a82ff;
   --color-danger: #ff5d6c;
   --color-warn: #f5b74e;
-  --color-clip-video: #3d5bd9;
-  --color-clip-audio: #1f9e7a;
-  --color-clip-text: #b0569e;
+  --color-tl-video: #3d5bd9;
+  --color-tl-audio: #1f9e7a;
+  --color-tl-text: #b0569e;
   --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 

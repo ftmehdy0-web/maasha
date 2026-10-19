@@ -7,6 +7,7 @@ import { projectDuration, renderFrame } from "@/lib/render";
 import { MediaPool } from "@/lib/preview/pool";
 import { formatTime } from "@/lib/time";
 import { IconButton } from "./ui";
+import { TextOverlay } from "./TextOverlay";
 
 // Preview resolution. Layout is resolution-independent (text scales with height),
 // so the preview matches export at any size.
@@ -111,6 +112,7 @@ export function Preview() {
             aria-label="Video preview"
             data-testid="preview-canvas"
           />
+          <TextOverlay width={PW} height={PH} />
         </div>
       </div>
       <div ref={hostRef} aria-hidden className="pointer-events-none fixed top-0 left-0 h-px w-px overflow-hidden opacity-0" />
