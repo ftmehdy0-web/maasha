@@ -1,12 +1,21 @@
 import { useEditor } from "@/store/editor";
 import { ImportError, probeFile } from "./import";
 import { registerMedia } from "./registry";
-import { onMediaImported } from "../persist/hooks";
+import { findRelinkTarget, onMediaImported } from "../persist/hooks";
 
 /** Validates, registers and adds files to the library, reporting problems as notices. */
 export async function importFiles(files: Iterable<File>): Promise<void> {
   const st = useEditor.getState();
   for (const file of files) {
+    const relinkId = findRelinkTarget(file);
+    if (relinkId) {
+      // Same name and size as a missing file in this project: reconnect it.
+      registerMedia(relinkId, file);
+      await onMediaImported(relinkId, file);
+      st.notify("info", `Relinked “${file.name}”.`);
+      useEditor.setState((s) => ({ project: { ...s.project } })); // refresh views
+      continue;
+    }
     st.setImporting(1);
     try {
       const { asset, warnings } = await probeFile(file);

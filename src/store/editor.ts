@@ -32,6 +32,7 @@ interface EditorState {
   notices: Notice[];
   importing: number;
   snapping: boolean;
+  saveState: "idle" | "pending" | "saving" | "saved" | "error";
   /** Time of the active snap guide while dragging, for display only. */
   snapLine: number | null;
 
@@ -96,6 +97,7 @@ export const useEditor = create<EditorState>()((set, get) => ({
   notices: [],
   importing: 0,
   snapping: true,
+  saveState: "idle",
   snapLine: null,
 
   commit: (fn, coalesceKey) => {
