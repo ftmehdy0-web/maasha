@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 import { useEditor } from "@/store/editor";
 import { projectDuration, renderFrame } from "@/lib/render";
@@ -18,6 +18,20 @@ export function Preview() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const poolRef = useRef<MediaPool | null>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [frame, setFrame] = useState({ w: 0, h: 0 });
+
+  // Largest 16:9 frame that fits the available space, whatever the layout.
+  useEffect(() => {
+    const el = boxRef.current!;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      const w = Math.floor(Math.min(width, (height * 16) / 9));
+      setFrame({ w, h: Math.floor((w * 9) / 16) });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -101,9 +115,9 @@ export function Preview() {
   }, []);
 
   return (
-    <section aria-label="Preview" className="flex min-h-0 min-w-0 flex-col bg-bg">
-      <div className="flex min-h-0 flex-1 items-center justify-center p-3">
-        <div className="relative aspect-video max-h-full w-full max-w-full overflow-hidden rounded-md bg-black shadow-lg ring-1 ring-line" style={{ maxWidth: "calc((100vh - 21rem) * 16 / 9)" }}>
+    <section aria-label="Preview" className="area-prev flex min-h-0 min-w-0 flex-col bg-bg">
+      <div ref={boxRef} className="flex min-h-0 flex-1 items-center justify-center p-3">
+        <div className="relative shrink-0 overflow-hidden rounded-md bg-black shadow-lg ring-1 ring-line" style={{ width: frame.w, height: frame.h }}>
           <canvas
             ref={canvasRef}
             width={PW}

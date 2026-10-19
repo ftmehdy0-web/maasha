@@ -107,7 +107,12 @@ export async function probeFile(file: File): Promise<ProbeResult> {
             "This video is HEVC (H.265), which this browser can't decode. On iPhone set Settings → Camera → Formats → Most Compatible, or convert the file to H.264 MP4. Safari on macOS and Chrome/Edge on Windows with HEVC support can open it.",
           );
         }
-        throw new ImportError(`This browser can't decode the video codec (${codec ?? "unknown"}). Convert the file to H.264 MP4.`);
+        if (codec === "avc") {
+          throw new ImportError(
+            "This browser can't decode this H.264 video (its profile or resolution may be beyond what this device supports). Try re-encoding it at 1080p.",
+          );
+        }
+        throw new ImportError(`This browser can't decode ${codecName(codec)} video. Convert the file to H.264 MP4.`);
       }
       width = await vt.getDisplayWidth();
       height = await vt.getDisplayHeight();
@@ -121,8 +126,8 @@ export async function probeFile(file: File): Promise<ProbeResult> {
       hasAudio = await at.canDecode().catch(() => false);
       if (!hasAudio) {
         const c = await at.getCodec();
-        if (kind === "audio") throw new ImportError(`This browser can't decode the audio codec (${c ?? "unknown"}).`);
-        warnings.push(`${file.name}: the audio track (${c ?? "unknown"}) can't be decoded, so the clip will be silent.`);
+        if (kind === "audio") throw new ImportError(`This browser can't decode ${codecName(c)} audio. Convert it to MP3, AAC or WAV.`);
+        warnings.push(`${file.name}: the ${codecName(c)} audio track can't be decoded in this browser, so the clip will be silent.`);
       }
     }
 
@@ -160,6 +165,15 @@ export async function probeFile(file: File): Promise<ProbeResult> {
   } finally {
     input.dispose();
   }
+}
+
+const CODEC_NAMES: Record<string, string> = {
+  avc: "H.264", hevc: "HEVC (H.265)", vp8: "VP8", vp9: "VP9", av1: "AV1",
+  aac: "AAC", opus: "Opus", mp3: "MP3", vorbis: "Vorbis", flac: "FLAC", ac3: "AC-3", eac3: "E-AC-3", dts: "DTS",
+};
+
+function codecName(c: string | null): string {
+  return c ? (CODEC_NAMES[c] ?? c.toUpperCase()) : "this file's";
 }
 
 function thumbFrom(src: CanvasImageSource, w: number, h: number): string | undefined {

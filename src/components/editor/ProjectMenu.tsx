@@ -100,7 +100,7 @@ export function ProjectMenu() {
                     await removeProject(p.id);
                     refresh();
                   }}
-                  className="mr-1 rounded p-1.5 text-muted opacity-100 hover:text-danger md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100"
+                  className="mr-1 rounded p-1.5 text-muted opacity-100 hover:text-danger pointer-fine:opacity-0 pointer-fine:group-focus-within:opacity-100 pointer-fine:group-hover:opacity-100"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

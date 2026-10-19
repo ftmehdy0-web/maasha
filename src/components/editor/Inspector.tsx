@@ -13,7 +13,7 @@ export function Inspector() {
   const clip = useEditor(selectedClip);
 
   return (
-    <aside aria-label="Inspector" className="scrollbar-thin flex min-h-0 flex-col overflow-y-auto border-l border-line bg-panel">
+    <aside aria-label="Inspector" className="area-insp scrollbar-thin flex min-h-0 flex-col overflow-y-auto border-l border-line bg-panel">
       <header className="flex h-10 shrink-0 items-center border-b border-line px-3">
         <h2 className="text-sm font-semibold">
           {clip ? (clip.type === "text" ? "Text" : "Clip") : "Project"}

@@ -28,7 +28,7 @@ export function MediaLibrary() {
   return (
     <section
       aria-label="Media library"
-      className={`flex min-h-0 flex-col border-r border-line bg-panel ${over ? "ring-2 ring-accent ring-inset" : ""}`}
+      className={`area-lib flex min-h-0 flex-col border-r border-line bg-panel ${over ? "ring-2 ring-accent ring-inset" : ""}`}
       onDragOver={(e) => {
         if (e.dataTransfer.types.includes("Files")) {
           e.preventDefault();
@@ -139,7 +139,7 @@ function MediaItem({ asset }: { asset: MediaAsset }) {
         <Icon className="h-3 w-3 shrink-0 text-muted" aria-hidden />
         <span className="min-w-0 flex-1 truncate text-[11px]">{asset.name}</span>
       </div>
-      <div className="absolute top-1 right-1 flex gap-1 opacity-100 transition-opacity md:opacity-0 md:group-focus-within:opacity-100 md:group-hover:opacity-100">
+      <div className="absolute top-1 right-1 flex gap-1 opacity-100 transition-opacity pointer-fine:opacity-0 pointer-fine:group-focus-within:opacity-100 pointer-fine:group-hover:opacity-100">
         <IconButton
           label={`Add ${asset.name} to timeline at playhead`}
           className="h-6 min-w-6 bg-black/70 hover:bg-accent"

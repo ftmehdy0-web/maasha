@@ -40,3 +40,29 @@ input[type="range"] {
   scrollbar-width: thin;
   scrollbar-color: var(--color-raised) transparent;
 }
+
+/* Editor layout: library | preview | inspector. On portrait tablets the
+   preview gets the full width and the side panels sit below it. */
+.editor-grid {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) 220px;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas: "lib prev insp";
+}
+@media (min-width: 1024px) {
+  .editor-grid {
+    grid-template-columns: 250px minmax(0, 1fr) 280px;
+  }
+}
+@media (orientation: portrait) and (max-width: 1023px) {
+  .editor-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      "prev prev"
+      "lib insp";
+  }
+}
+.area-lib { grid-area: lib; }
+.area-prev { grid-area: prev; }
+.area-insp { grid-area: insp; }

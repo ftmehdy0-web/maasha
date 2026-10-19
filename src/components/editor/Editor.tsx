@@ -45,7 +45,7 @@ export default function Editor() {
   return (
     <div className="flex h-dvh min-h-[560px] flex-col overflow-hidden bg-bg text-fg">
       <Header />
-      <div className="grid min-h-0 flex-1 grid-cols-[190px_1fr_220px] lg:grid-cols-[250px_1fr_280px]">
+      <div className="editor-grid min-h-0 flex-1">
         <MediaLibrary />
         <Preview />
         <Inspector />
